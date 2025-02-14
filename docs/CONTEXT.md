@@ -6,7 +6,7 @@
 - [✓] Deploy commands using `deploy-commands.js`
 - [✓] Ensure bot is online and responding
 - [✓] Add rotating activity status
-- [] Set up SQLite database
+- [✓] Set up SQLite database
 - [✓] Implement basic command structure
 
 ## 🎮 Phase 2: RPG Core Features
