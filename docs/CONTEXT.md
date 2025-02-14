@@ -21,14 +21,25 @@
 - [✓] Basic shop system with `/shop` and `/buy`
 
 ### **3. Quest System**
-- [✓] `/quest list` - View available quests
-- [✓] `/quest start` - Start a new quest
+- [✓] `/quest list` - View available quests with cooldown status
+- [✓] `/quest start` - Start a new quest with autocomplete
 - [✓] `/quest status` - Check quest progress
 - [✓] `/quest reset` - Reset active quests
-- [✓] Quest rewards (XP, coins)
-- [✓] Quest progress tracking
-- [ ] Quest cooldowns
-- [ ] Daily/Weekly quests
+- [✓] Quest types:
+  - Daily quests with cooldown
+  - Weekly quests with cooldown
+  - Achievement quests
+  - Main story quests
+- [✓] Quest features:
+  - Progress tracking
+  - XP and coin rewards
+  - Visual progress bars
+  - Level requirements
+  - Cooldown system
+- [✓] Database integration:
+  - Quest definitions
+  - Progress tracking
+  - Completion history
 
 ### **4. Inventory System**
 - [✓] Basic inventory management
