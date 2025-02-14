@@ -16,9 +16,9 @@
 - [✓] `/profile @user` - Check user XP and level
 
 ### **2. Economy System**
-- [] `/daily` - Daily coin rewards
-- [] `/balance` - Check coin balance
-- [] Basic shop system with `/shop` and `/buy`
+- [✓] `/daily` - Daily coin rewards
+- [✓] `/balance` - Check coin balance
+- [✓] Basic shop system with `/shop` and `/buy`
 
 ### **3. Quest System**
 - [] `/quest list` - View available quests

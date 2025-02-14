@@ -26,6 +26,18 @@ function initializeTables() {
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     `);
+
+    // Inventory table
+    db.run(`
+        CREATE TABLE IF NOT EXISTS inventory (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id TEXT,
+            item_id TEXT,
+            quantity INTEGER DEFAULT 1,
+            equipped BOOLEAN DEFAULT 0,
+            FOREIGN KEY (user_id) REFERENCES users(user_id)
+        )
+    `);
 }
 
 module.exports = db; 
