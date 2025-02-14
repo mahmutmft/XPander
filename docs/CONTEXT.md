@@ -21,11 +21,12 @@
 - [✓] Basic shop system with `/shop` and `/buy`
 
 ### **3. Quest System**
-- [] `/quest list` - View available quests
-- [] `/quest start` - Start a new quest
-- [] `/quest status` - Check quest progress
-- [] `/quest progress` - Update quest progress
-- [] Quest rewards (XP, coins)
+- [✓] `/quest list` - View available quests
+- [✓] `/quest start` - Start a new quest
+- [✓] `/quest status` - Check quest progress
+- [✓] `/quest reset` - Reset active quests
+- [✓] Quest rewards (XP, coins)
+- [✓] Quest progress tracking
 - [ ] Quest cooldowns
 - [ ] Daily/Weekly quests
 

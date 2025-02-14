@@ -9,7 +9,8 @@ module.exports = {
             requirement_count: 10,
             reward_xp: 100,
             reward_coins: 50,
-            min_level: 1
+            min_level: 1,
+            cooldown: 'daily'
         },
         {
             id: 'daily_shop',
@@ -20,7 +21,22 @@ module.exports = {
             requirement_count: 1,
             reward_xp: 50,
             reward_coins: 100,
-            min_level: 1
+            min_level: 1,
+            cooldown: 'daily'
+        }
+    ],
+    weekly: [
+        {
+            id: 'weekly_social',
+            title: 'Weekly Socialite',
+            description: 'Send 100 messages in any channel',
+            type: 'weekly',
+            requirement_type: 'messages',
+            requirement_count: 100,
+            reward_xp: 500,
+            reward_coins: 1000,
+            min_level: 1,
+            cooldown: 'weekly'
         }
     ],
     achievements: [
