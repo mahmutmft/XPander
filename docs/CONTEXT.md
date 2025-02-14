@@ -30,8 +30,8 @@
 - [ ] Daily/Weekly quests
 
 ### **4. Inventory System**
-- [] Basic inventory management
-- [] View items with `/inventory`
+- [✓] Basic inventory management
+- [✓] View items with `/inventory`
 - [ ] Item durability
 - [ ] Item crafting
 
