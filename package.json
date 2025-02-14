@@ -1,0 +1,21 @@
+{
+  "scripts": {
+    "start": "node src/index.js",
+    "deploy": "node src/deploy-commands.js"
+  },
+  "name": "xpander",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">\r   <img src=\"docs/assets/images/logo.png\" alt=\"XPander RPG Logo\" width=\"200\"/>",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.18.0",
+    "dotenv": "^16.4.7",
+    "sqlite3": "^5.1.7"
+  }
+}
