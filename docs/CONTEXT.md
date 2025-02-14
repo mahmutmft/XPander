@@ -11,9 +11,9 @@
 
 ## 🎮 Phase 2: RPG Core Features
 ### **1. Leveling System**
-- [] Users earn XP by sending messages
-- [] XP required per level increases dynamically
-- [] `/profile @user` - Check user XP and level
+- [✓] Users earn XP by sending messages
+- [✓] XP required per level increases dynamically
+- [✓] `/profile @user` - Check user XP and level
 
 ### **2. Economy System**
 - [] `/daily` - Daily coin rewards
