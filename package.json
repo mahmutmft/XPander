@@ -5,11 +5,8 @@
   },
   "name": "xpander",
   "version": "1.0.0",
-  "description": "<div align=\"center\">\r   <img src=\"docs/assets/images/logo.png\" alt=\"XPander RPG Logo\" width=\"200\"/>",
+  "description": "Discord RPG Bot",
   "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
