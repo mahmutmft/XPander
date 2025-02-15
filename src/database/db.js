@@ -37,6 +37,7 @@ function initializeTables() {
                 item_id TEXT,
                 quantity INTEGER DEFAULT 1,
                 equipped BOOLEAN DEFAULT 0,
+                durability INTEGER,
                 FOREIGN KEY (user_id) REFERENCES users(user_id)
             )
         `);
