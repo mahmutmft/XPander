@@ -8,7 +8,12 @@ module.exports = {
     price: 100,
     damage: 5,
     level_required: 1,
-    icon: '🗡️'
+    icon: '🗡️',
+    durability: {
+      max: 100,
+      current: 100,
+      loss_per_use: 5
+    }
   },
   iron_sword: {
     id: 'iron_sword',
@@ -17,7 +22,12 @@ module.exports = {
     price: 500,
     damage: 15,
     level_required: 5,
-    icon: '⚔️'
+    icon: '⚔️',
+    durability: {
+      max: 200,
+      current: 200,
+      loss_per_use: 3
+    }
   },
 
   // Armor
@@ -29,7 +39,12 @@ module.exports = {
     type: 'armor',
     defense: 5,
     level_required: 1,
-    icon: '🥋'
+    icon: '🥋',
+    durability: {
+      max: 150,
+      current: 150,
+      loss_per_use: 2
+    }
   },
 
   // Consumables
