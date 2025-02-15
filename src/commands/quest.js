@@ -180,125 +180,97 @@ async function handleQuestList(interaction) {
 }
 
 async function handleQuestStart(interaction) {
+    const questId = interaction.options.getString('quest_id');
+
     try {
-        const questId = interaction.options.getString('quest_id');
-        
-        // Find the quest in our config
-        let questData = null;
-        for (const category of Object.values(quests)) {
-            const found = category.find(q => q.id === questId);
-            if (found) {
-                questData = found;
-                break;
-            }
-        }
-
-        if (!questData) {
-            return await interaction.reply({
-                content: 'Invalid quest ID. Use `/quest list` to see available quests.',
-                ephemeral: true
-            });
-        }
-
-        // Check cooldown and requirements
+        // Check if user exists and get quest data
         db.get(`
-            SELECT completed_at 
-            FROM user_quests 
-            WHERE user_id = ? 
-            AND quest_id = ? 
-            AND completed = 1 
-            AND (
-                (type = 'daily' AND date(completed_at) = date('now'))
-                OR 
-                (type = 'weekly' AND date(completed_at, 'weekday 0', '-7 days') = date('now', 'weekday 0', '-7 days'))
-            )`,
-            [interaction.user.id, questId],
-            async (err, lastCompletion) => {
+            SELECT u.user_id, u.xp, 
+                   q.type, q.cooldown, q.title, q.description, 
+                   q.requirement_count, q.reward_coins, q.reward_xp
+            FROM users u
+            JOIN quests q ON q.quest_id = ?
+            WHERE u.user_id = ?`,
+            [questId, interaction.user.id],
+            async (err, userData) => {
                 if (err) {
                     console.error('Database error:', err);
                     return await interaction.reply({
-                        content: 'An error occurred while checking quest status.',
+                        content: 'Error checking user data!',
                         ephemeral: true
                     });
                 }
 
-                if (lastCompletion) {
-                    const cooldownType = questData.type === 'weekly' ? 'week' : 'day';
+                if (!userData) {
                     return await interaction.reply({
-                        content: `⏳ You have already completed this quest this ${cooldownType}! Try again ${cooldownType === 'week' ? 'next week' : 'tomorrow'}.`,
+                        content: 'You need to register first! Use `/register`',
                         ephemeral: true
                     });
                 }
 
-                // Check if user meets level requirement and if quest is already active
-                db.get('SELECT xp FROM users WHERE user_id = ?', [interaction.user.id], async (err, user) => {
-                    if (err || !user) {
-                        return await interaction.reply({
-                            content: 'You need to register first! Use `/register`',
-                            ephemeral: true
-                        });
-                    }
-
-                    const userLevel = calculateLevel(user.xp);
-                    if (userLevel < questData.min_level) {
-                        return await interaction.reply({
-                            content: `You need to be level ${questData.min_level} to start this quest!`,
-                            ephemeral: true
-                        });
-                    }
-
-                    // Check for existing active quest
-                    db.get('SELECT * FROM user_quests WHERE user_id = ? AND quest_id = ? AND completed = 0', 
-                        [interaction.user.id, questId], 
-                        async (err, existingQuest) => {
-                            if (err) {
-                                console.error('Database error:', err);
-                                return await interaction.reply({
-                                    content: 'An error occurred while checking quest status.',
-                                    ephemeral: true
-                                });
-                            }
-
-                            if (existingQuest) {
-                                return await interaction.reply({
-                                    content: 'You already have this quest active!',
-                                    ephemeral: true
-                                });
-                            }
-
-                            // Start the quest
-                            db.run('INSERT INTO user_quests (user_id, quest_id, progress) VALUES (?, ?, 0)',
-                                [interaction.user.id, questId],
-                                async (err) => {
-                                    if (err) {
-                                        console.error('Database error:', err);
-                                        return await interaction.reply({
-                                            content: 'Failed to start the quest!',
-                                            ephemeral: true
-                                        });
-                                    }
-
-                                    const embed = new EmbedBuilder()
-                                        .setColor(0x0099FF)
-                                        .setTitle('Quest Started!')
-                                        .setDescription(`**${questData.title}**\n${questData.description}`)
-                                        .addFields(
-                                            { name: 'Objective', value: `Progress: 0/${questData.requirement_count}` },
-                                            { name: 'Rewards', value: `${questData.reward_coins}🪙, ${questData.reward_xp}XP` }
-                                        );
-
-                                    await interaction.reply({ embeds: [embed] });
-                                }
-                            );
+                // Check cooldown
+                db.get(`
+                    SELECT uq.completed_at, q.type 
+                    FROM user_quests uq
+                    JOIN quests q ON q.quest_id = uq.quest_id
+                    WHERE uq.user_id = ? 
+                    AND uq.quest_id = ? 
+                    AND uq.completed = 1 
+                    AND (
+                        (q.type = 'daily' AND date(uq.completed_at) = date('now'))
+                        OR 
+                        (q.type = 'weekly' AND date(uq.completed_at, 'weekday 0', '-7 days') = date('now', 'weekday 0', '-7 days'))
+                    )`,
+                    [interaction.user.id, questId],
+                    async (err, lastCompletion) => {
+                        if (err) {
+                            console.error('Database error:', err);
+                            return await interaction.reply({
+                                content: 'Error checking quest status!',
+                                ephemeral: true
+                            });
                         }
-                    );
-                });
+
+                        if (lastCompletion) {
+                            const cooldownType = userData.type === 'weekly' ? 'week' : 'day';
+                            return await interaction.reply({
+                                content: `⏳ You have already completed this quest this ${cooldownType}! Try again ${cooldownType === 'week' ? 'next week' : 'tomorrow'}.`,
+                                ephemeral: true
+                            });
+                        }
+
+                        // Start the quest
+                        db.run('INSERT INTO user_quests (user_id, quest_id, progress) VALUES (?, ?, 0)',
+                            [interaction.user.id, questId],
+                            async (err) => {
+                                if (err) {
+                                    console.error('Database error:', err);
+                                    return await interaction.reply({
+                                        content: 'Failed to start quest!',
+                                        ephemeral: true
+                                    });
+                                }
+
+                                const embed = new EmbedBuilder()
+                                    .setColor(0x0099FF)
+                                    .setTitle('Quest Started!')
+                                    .setDescription(`**${userData.title}**\n${userData.description}`)
+                                    .addFields(
+                                        { name: 'Objective', value: `Progress: 0/${userData.requirement_count}` },
+                                        { name: 'Rewards', value: `💰 ${userData.reward_coins} coins\n✨ ${userData.reward_xp} XP` }
+                                    );
+
+                                await interaction.reply({ embeds: [embed] });
+                            }
+                        );
+                    }
+                );
             }
         );
     } catch (error) {
-        console.error('Error in quest start:', error);
+        console.error('Error in quest command:', error);
         await interaction.reply({
-            content: 'An error occurred while starting the quest.',
+            content: 'An error occurred while processing the quest command.',
             ephemeral: true
         });
     }
