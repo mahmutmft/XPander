@@ -14,44 +14,44 @@
 - [✓] Users earn XP by sending messages
 - [✓] XP required per level increases dynamically
 - [✓] `/profile @user` - Check user XP and level
+- [✓] Level up notifications in chat
 
 ### **2. Economy System**
 - [✓] `/daily` - Daily coin rewards
 - [✓] `/balance` - Check coin balance
 - [✓] Basic shop system with `/shop` and `/buy`
+- [✓] Item configuration system
+- [✓] Item prices and level requirements
 
 ### **3. Quest System**
-- [✓] `/quest list` - View available quests with cooldown status
-- [✓] `/quest start` - Start a new quest with autocomplete
-- [✓] `/quest status` - Check quest progress
-- [✓] `/quest reset` - Reset active quests
-- [✓] Quest types:
-  - Daily quests with cooldown
-  - Weekly quests with cooldown
-  - Achievement quests
-  - Main story quests
-- [✓] Quest features:
-  - Progress tracking
-  - XP and coin rewards
-  - Visual progress bars
-  - Level requirements
-  - Cooldown system
-- [✓] Database integration:
-  - Quest definitions
-  - Progress tracking
-  - Completion history
+- [✓] `/quest list` - View available quests
+- [✓] `/quest start` - Start new quests with autocomplete
+- [✓] `/quest status` - Check active quest progress
+- [✓] Quest progress tracking for messages
+- [✓] Quest rewards (XP & Coins)
+- [✓] Daily and weekly quest cooldowns
+- [✓] Achievement quests
+- [✓] Main story quests
+- [✓] Level requirements for quests
+- [✓] Quest completion notifications
 
 ### **4. Inventory System**
 - [✓] Basic inventory management
-- [✓] View items with `/inventory`
-- [ ] Item durability
+- [✓] `/inventory` - View items with categories
+- [✓] Equipment system with `/use` command
+- [✓] Item durability system
+- [✓] Item repair system
+- [✓] Equipment slots (weapons, armor)
 - [ ] Item crafting
+- [ ] Item trading
 
 ### **5. Combat System**
 - [ ] Basic combat mechanics
 - [ ] PvE battles
-- [ ] PvP system
 - [ ] Combat rewards
+- [ ] Durability loss in combat
+- [ ] Combat stats (Attack/Defense)
+- [ ] Combat cooldowns
 
 ## 🌐 Phase 3: Web Dashboard
 - [] Set up Next.js project
@@ -63,9 +63,9 @@
 - [ ] Leaderboards
 
 ## 📱 Phase 4: Polish & Release
-- [] Add detailed help commands
-- [] Implement error handling
-- [] Add command cooldowns
+- [ ] Add detailed help commands
+- [ ] Implement error handling
+- [ ] Add command cooldowns
 - [ ] Create a support server & documentation
 - [ ] Release XPander & gather feedback
 
