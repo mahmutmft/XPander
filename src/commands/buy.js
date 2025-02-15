@@ -106,8 +106,15 @@ module.exports = {
                     db.run('UPDATE users SET coins = coins - ? WHERE user_id = ?',
                         [totalCost, interaction.user.id]);
 
-                    db.run('INSERT INTO inventory (user_id, item_id, quantity) VALUES (?, ?, ?)',
-                        [interaction.user.id, item.id, quantity],
+                    db.run(`
+                        INSERT INTO inventory (user_id, item_id, quantity, durability) 
+                        VALUES (?, ?, ?, ?)`,
+                        [
+                            interaction.user.id, 
+                            itemId, 
+                            quantity, 
+                            item.durability ? item.durability.max : null
+                        ],
                         async (err) => {
                             if (err) {
                                 db.run('ROLLBACK');
