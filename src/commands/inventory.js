@@ -29,7 +29,7 @@ module.exports = {
                     }
 
                     // Get user's inventory
-                    db.all('SELECT item_id, quantity, equipped FROM inventory WHERE user_id = ?',
+                    db.all('SELECT item_id, quantity, equipped, durability FROM inventory WHERE user_id = ?',
                         [interaction.user.id],
                         async (err, userItems) => {
                             if (err) {
@@ -74,7 +74,9 @@ module.exports = {
                                 const itemsList = typeItems
                                     .map(item => {
                                         const equippedText = item.equipped ? ' (Equipped)' : '';
-                                        return `${item.data.icon} ${item.data.name} ×${item.quantity}${equippedText}`;
+                                        const durabilityText = item.data.durability ? 
+                                            ` [${item.durability || 0}/${item.data.durability.max}]` : '';
+                                        return `${item.data.icon} ${item.data.name} ×${item.quantity}${equippedText}${durabilityText}`;
                                     })
                                     .join('\n');
 
